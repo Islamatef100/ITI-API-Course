@@ -10,7 +10,7 @@ public partial class ItiContext : DbContext
     {
     }
 
-    public ItiContext(DbContextOptions<ItiContext> options): base(options)
+    public ItiContext(DbContextOptions<ItiContext> options) : base(options)
     {
 
     }
@@ -19,8 +19,8 @@ public partial class ItiContext : DbContext
 
     public virtual DbSet<Student> Students { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=.;Database=ITI;Trusted_Connection=True;TrustServerCertificate=True;");
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //    => optionsBuilder.UseSqlServer("Server=.;Database=ITI;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -50,8 +50,5 @@ public partial class ItiContext : DbContext
                 .HasConstraintName("FK__Student__Departm__398D8EEE");
         });
 
-        OnModelCreatingPartial(modelBuilder);
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
