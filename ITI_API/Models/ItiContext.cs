@@ -16,8 +16,11 @@ public partial class ItiContext : DbContext
     }
 
     public virtual DbSet<Department> Departments { get; set; }
-
     public virtual DbSet<Student> Students { get; set; }
+    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<Role> Roles { get; set; }
+    public virtual DbSet<UserRole> UserRoles { get; set; }
+
 
     //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     //    => optionsBuilder.UseSqlServer("Server=.;Database=ITI;Trusted_Connection=True;TrustServerCertificate=True;");
@@ -49,6 +52,17 @@ public partial class ItiContext : DbContext
                 .HasForeignKey(d => d.DepartmentId)
                 .HasConstraintName("FK__Student__Departm__398D8EEE");
         });
+        modelBuilder.Entity<UserRole>()
+         .HasKey(ur => new { ur.UserId, ur.RoleId });
 
+        modelBuilder.Entity<UserRole>()
+            .HasOne(ur => ur.User)
+            .WithMany(u => u.UserRoles)
+            .HasForeignKey(ur => ur.UserId);
+
+        modelBuilder.Entity<UserRole>()
+            .HasOne(ur => ur.Role)
+            .WithMany(r => r.UserRoles)
+            .HasForeignKey(ur => ur.RoleId);
     }
 }
